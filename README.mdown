@@ -1,0 +1,25 @@
+# Business Form
+
+A simple, mobile-friendly business form that saves responses directly to **Google Sheets** using **Google Apps Script**.
+
+🌍 **Live Demo:** [Business Form](https://kingewajesus.github.io/business-form/)
+
+---
+
+## 🚀 Features
+- 📋 Collects **Name, Email, and Message**.  
+- 🖌️ Styled with modern CSS (responsive design).  
+- ☁️ Submits data to Google Sheets (via Apps Script).  
+- ✅ Shows success or error messages to the user.  
+- 🔒 Secure — no backend server needed.  
+
+---
+
+## 🛠️ How It Works
+1. The form is built in **HTML + CSS + JavaScript**.  
+2. When submitted, data is sent to a **Google Apps Script Web App**.  
+3. The Apps Script writes the data into a connected **Google Sheet**.  
+
+---
+
+## 📂 Project Structure

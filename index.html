@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #f9d423, #ff4e50);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 500px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #555;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    button {
+      background: #ff4e50;
+      color: white;
+      border: none;
+      font-weight: bold;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #e63e40;
+    }
+    .success {
+      color: green;
+      margin-top: 15px;
+      text-align: center;
+      display: none;
+    }
+    .error {
+      color: red;
+      margin-top: 15px;
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Business Form</h2>
+    <form id="businessForm">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="4" required></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+    <p class="success" id="successMsg">✅ Form submitted successfully!</p>
+    <p class="error" id="errorMsg">❌ There was an error. Try again.</p>
+  </div>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxC-n89BWEhibZQkC33enclW6u6Ko6uBGxi-NBV0tmQrtN7_cciHlxRjNJDzOwcbOCe/exec";
+    const form = document.getElementById("businessForm");
+    const successMsg = document.getElementById("successMsg");
+    const errorMsg = document.getElementById("errorMsg");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      fetch(scriptURL, { method: "POST", body: new FormData(form)})
+        .then(response => {
+          if (response.ok) {
+            successMsg.style.display = "block";
+            errorMsg.style.display = "none";
+            form.reset();
+          } else {
+            throw new Error("Network response was not ok");
+          }
+        })
+        .catch(error => {
+          successMsg.style.display = "none";
+          errorMsg.style.display = "block";
+        });
+    });
+  </script>
+</body>
+</html>

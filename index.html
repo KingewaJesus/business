@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Business Entry Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #9face6);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 320px;
+      color: #333;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 18px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #6a5acd;
+      box-shadow: 0 0 6px rgba(106, 90, 205, 0.4);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #36d1dc, #5b86e5);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #5b86e5, #36d1dc);
+    }
+
+    .success, .error {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .success { color: green; display: none; }
+    .error { color: red; display: none; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Product Submission</h2>
+    <form id="businessForm">
+      <label for="individualName">Individual Name</label>
+      <input type="text" id="individualName" name="individualName" required>
+
+      <label for="productName">Product Name</label>
+      <input type="text" id="productName" name="productName" required>
+
+      <label for="amount">Price of Product</label>
+      <input type="number" id="amount" name="amount" required>
+
+      <button type="submit">Submit</button>
+    </form>
+    <p class="success" id="successMsg">✔ Form submitted successfully!</p>
+    <p class="error" id="errorMsg">❌ Error submitting data. Try again.</p>
+  </div>
+
+  <script>
+    const form = document.getElementById("businessForm");
+    const successMsg = document.getElementById("successMsg");
+    const errorMsg = document.getElementById("errorMsg");
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwlApwplSeQmjtnhPmk75R-QOwrU43a8ruzNoj2SdIko5cv1zmyOBYsJFp0PL9JN5WxfQ/exec";
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      successMsg.style.display = "none";
+      errorMsg.style.display = "none";
+      const formData = new FormData(form);
+      fetch(scriptURL, {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.text())
+      .then(text => {
+        if (text.trim() === "Success") {
+          successMsg.style.display = "block";
+          form.reset();
+        } else {
+          errorMsg.textContent = "Error: " + text;
+          errorMsg.style.display = "block";
+        }
+      })
+      .catch(err => {
+        errorMsg.textContent = "Network error: " + err;
+        errorMsg.style.display = "block";
+      });
+    });
+  </script>
+</body>
+</html>
